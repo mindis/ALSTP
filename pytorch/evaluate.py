@@ -13,7 +13,7 @@ import data_import
 def mrr(gt_item, pred_items):
 	if gt_item in pred_items:
 		index = torch.tensor(pred_items.tolist().index(gt_item), 
-											dtype=torch.float32)
+							dtype=torch.float32)
 		return torch.reciprocal(index+1)
 	else:
 		return 0
@@ -26,7 +26,7 @@ def hit(gt_item, pred_items):
 def ndcg(gt_item, pred_items):
 	if gt_item in pred_items:
 		index = torch.tensor(pred_items.tolist().index(gt_item), 
-											dtype=torch.float32)
+							dtype=torch.float32)
 		return torch.reciprocal(torch.log2(index+2))
 	return 0
 
@@ -58,9 +58,9 @@ def valid(model, valid_data, fix_dim, user_list,
 		_ = valid_data.next_user(user)
 		item_id, query_target, text_query = valid_data.next_item(0)
 		query_target = torch.tensor(torch.cuda.FloatTensor(
-							np.reshape(query_target, [1, fix_dim])))
+					np.reshape(query_target, [1, fix_dim])))
 		all_score = model(item_vec, None, query_pre, 
-								query_target, None, all_items_vec)
+					query_target, None, all_items_vec)
 		_, top_rank = torch.topk(all_score, top_k)
 		items_rank = np.take(all_items, top_rank)
 
@@ -70,6 +70,6 @@ def valid(model, valid_data, fix_dim, user_list,
 		NDCG.append(ndcg(item_id, items_rank))
 
 	print("Hit rate is %.3f\t Mrr is %.3f\t Ndcg is %.3f" % (
-												np.mean(HR), 
-												np.mean(MRR),
-												np.mean(NDCG)))
+							np.mean(HR), 
+							np.mean(MRR),
+							np.mean(NDCG)))
