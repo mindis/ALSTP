@@ -35,7 +35,7 @@ class ALSTPData(object):
 			item_vec.append(
 					self.doc2vec_model.docvecs[self.data.asin[i]])
 			query_vec.append(self.doc2vec_model.docvecs[
-									query_dict[self.data.query_[i]]])
+							query_dict[self.data.query_[i]]])
 
 		self.data['item_vec'] = item_vec
 		self.data['query_vec'] = query_vec
@@ -83,23 +83,23 @@ class ALSTPData(object):
 			#Save the last asinVecUser and query_vec_user
 			if asin == self.length_user:
 				return (np.array(self.item_vec_user
-										[asin: asin + self.num_steps]),
+							[asin: asin + self.num_steps]),
 					    np.array(self.item_user
-					    				[asin: asin + self.num_steps]),
+					    		[asin: asin + self.num_steps]),
 					    np.array(self.query_vec_user
-					    				[asin: asin + self.num_steps]))
+					    		[asin: asin + self.num_steps]))
 			else:
 				return  (np.array(self.item_vec_user
-										[asin: asin + self.num_steps]),
+								[asin: asin + self.num_steps]),
 						 np.array(self.item_vec_user
-						 				[asin + self.num_steps]),
+						 		[asin + self.num_steps]),
 						 np.array(self.neg_vecs_user
-						 			[asin + self.num_steps]),
+						 		[asin + self.num_steps]),
 						 np.array(self.item_user
-						 			[asin + self.num_steps]),
-					     np.array(self.query_vec_user
+						 		[asin + self.num_steps]),
+					     	 np.array(self.query_vec_user
 					     			[asin: asin + self.num_steps]),
-					     np.array(self.query_vec_user
+					         np.array(self.query_vec_user
 					     			[asin + self.num_steps]))
 
 		else:
