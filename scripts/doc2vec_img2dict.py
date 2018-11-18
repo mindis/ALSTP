@@ -22,7 +22,7 @@ ROOT_DIR = '../processed/'
 
 full_file = os.path.join(ROOT_DIR, FLAGS.dataset, 'full.csv')
 full_data = pd.read_csv(full_file, usecols=[
-				'query_', 'reviewText', 'asin'])
+								'query_', 'reviewText', 'asin'])
 full_data.query_ = full_data.query_.apply(literal_eval)
 full_data.reviewText = full_data.reviewText.apply(literal_eval)
 
