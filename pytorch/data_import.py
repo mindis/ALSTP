@@ -16,7 +16,7 @@ class ALSTPData(object):
 		    should be shuffle, sample, next user, next item.
 		"""
 		self.doc2vec_model = Doc2Vec.load(os.path.join(
-						ROOT_DIR, dataset, 'doc2vecFile'))
+							ROOT_DIR, dataset, 'doc2vecFile'))
 		query_dict = json.load(open(os.path.join(
 						ROOT_DIR, dataset, 'queryFile.json'), 'r'))
 
@@ -35,7 +35,7 @@ class ALSTPData(object):
 			item_vec.append(
 					self.doc2vec_model.docvecs[self.data.asin[i]])
 			query_vec.append(self.doc2vec_model.docvecs[
-							query_dict[self.data.query_[i]]])
+									query_dict[self.data.query_[i]]])
 
 		self.data['item_vec'] = item_vec
 		self.data['query_vec'] = query_vec
