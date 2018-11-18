@@ -26,14 +26,6 @@ def extraction(meta_path, reviewDF, stop_path, count):
             line = eval(line)
             category_dic[line['asin']] = line['categories']
 
-            # if not 'description' in line:
-            #     descrip_dic[line['asin']] = ""
-            # else:
-            #     descrip_dic[line['asin']] = line['description']
-            # if 'title' in line:
-            #     descrip_dic[line['asin']] = descrip_dic[
-            #                      line['asin']] + ',' + line['title']
-
     # Filter each user have at least 10 transactions.
     review_lengths = reviewDF.groupby('reviewerID').size()
     reviewDF = reviewDF[np.in1d(reviewDF.reviewerID, 
@@ -64,13 +56,6 @@ def extraction(meta_path, reviewDF, stop_path, count):
         reviewText = reviewDF.reviewText[i]
         reviewText = tp.remove_char(reviewText)
         reviewText = tp.remove_stop(reviewText, stop_set)
-
-        # des_text = descrip_dic[asin]
-        # if des_text == "": #No description, nan.
-        #     des_text = []
-        # else:
-        #     des_text = tp.remove_char(des_text)
-        #     des_text = tp.remove_stop(des_text, stop_set)
 
         query_list.append(new_query)
         reviewText_list.append(reviewText)
@@ -104,23 +89,30 @@ def split_data(df):
 
     return df, df_train, df_test
 
+def get_user_bought(train_set):
+    """ obtain the products each user has bought before test. """
+    user_bought = {}
+    for i in range(len(train_set)):
+        user = train_set['reviewerID'][i]
+        item = train_set['asin'][i]
+        if user not in user_bought:
+            user_bought[user] = []
+        user_bought[user].append(item)
+
+    return user_bought
 
 def removeTest(df, df_test):
     """ Remove test review data and remove duplicate."""
     df = df.reset_index(drop=True)
     reviewText = []
-    # reviewDescript = []
 
     for i in range(len(df)):
         if df['filter'][i] == 'Test':
             reviewText.append("[]")
-            # reviewDescript.append("[]")
         else:
             reviewText.append(df['reviewText'][i])
-            # reviewDescript.append(df['reviewText'][i])
 
     df['reviewText'] = reviewText
-    # df['reviewDescript'] = reviewDescript
 
     return df
 
@@ -131,10 +123,10 @@ def main():
         default='/media/yang/DATA/Datasets/amazon',
         help="All source files should be under this folder.")
     parser.add_argument('--review_file', type=str,
-        default='reviews_Clothing_Shoes_and_Jewelry_5.json.gz',
+        default='reviews_Toys_and_Games_5.json.gz',
         help="5 core review file.")
     parser.add_argument('--meta_file', type=str,
-        default='meta_Clothing_Shoes_and_Jewelry.json.gz',
+        default='meta_Toys_and_Games.json.gz',
         help="Meta data file for the corresponding review file.")
     parser.add_argument('--count', type=int, default=5,
         help="Remove the words number less than count.")
@@ -160,7 +152,11 @@ def main():
     df = df.drop(['reviewerName', 'reviewTime', 'helpful', 'summary', 'overall'], axis=1)
 
     df = df.sort_values(by=['reviewerID', 'unixReviewTime'])
-    df, df_train, df_test = split_data(df)    
+    df, df_train, df_test = split_data(df)   
+    print(df_train); sys.exit(0)
+    user_bought = get_user_bought(df_train)
+    json.dump(user_bought, open(os.path.join(
+                                FLAGS.save_path, 'user_bought.json'), 'w')) 
     df = removeTest(df, df_test) #Remove the reviews from test set.
 
     df = df.drop(['unixReviewTime', 'filter'], axis=1)
