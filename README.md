@@ -1,7 +1,13 @@
 # ALSTP
 A pytorch and tensorflow GPU implementation of ALSTP.
 
-First of all, download the data and stopword file.
+
+Yangyang Guo, Zhiyong Cheng, Liqiang Nie, Yinglong Wang, Junma and Mohan Kankanhalli (2018). Attentive Long Short-Term Preference Modeling for Personalized Product Search. In TOIS.
+
+**Please cite our TOIS paper if you use our codes. Thanks!**
+
+Please download the Amazon Dataset from http://jmcauley.ucsd.edu/data/amazon.
+
 
 
 ## Setup:
