@@ -31,7 +31,7 @@ tensorflow 1.7
    ```
    python doc2vec.py --dataset --embedding_size --window_size
    ```
-4. Now start train our model. 
+4. Now start training our model. 
    ```
    python main.py --dataset --lr --num_steps --alpha
    ```
