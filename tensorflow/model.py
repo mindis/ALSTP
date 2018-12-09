@@ -13,7 +13,7 @@ class ALSTP(object):
 		Important Args.
 			clip_norm: the global clipping norm rate.
 			fix_dim: pre-defined dimension from doc2vec.
-			num_negative: sampled negative item number.
+			num_negative: sampled negative item numbers.
 			num_steps: the number of previous purchased products.
 			alpha: the long-term preference updating rate.
 			item_num: the number of all items.
