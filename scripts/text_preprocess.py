@@ -1,5 +1,6 @@
 import re
 import collections
+
 import numpy as np
 
 def remove_char(value):

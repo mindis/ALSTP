@@ -1,8 +1,10 @@
 import os, argparse
 import random, json
 import collections
+
 import numpy as np
 import pandas as pd
+
 from ast import literal_eval
 from gensim.models import doc2vec
 
