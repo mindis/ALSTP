@@ -4,6 +4,7 @@ from __future__ import print_function
 
 import os, json
 import collections
+
 import numpy as np
 import pandas as pd
 from gensim.models.doc2vec import Doc2Vec
