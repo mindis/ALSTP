@@ -25,6 +25,7 @@ class ALSTP(nn.Module):
         fix_dim: pre-defined dimension from doc2vec.
         num_steps: the number of previous purchased products.
         alpha: the long-term preference updating rate.
+	dropout: drop rate.
         """
         self.fix_dim = fix_dim
         self.num_steps = num_steps
